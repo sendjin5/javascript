@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 응용03 - 흐름 제어</title>
+</head>
+<body>
+    <div class="btn_group">
+        <button class="btn" id="btn1">정보출력</button>
+        <button class="btn" id="btn2">현재 URL</button>
+        <button class="btn" id="btn3">새로고침</button>
+        <button class="btn" id="btn4">사이트 이동</button>
+        <button class="btn" id="btn5">이동</button>
+        <button class="btn" id="btn6">뒤로가기</button>
+        <button class="btn" id="btn7">앞으로가기</button>
+        <button class="btn" id="btn8">원하는 곳으로</button>
+    </div>
+
+    <div id="res"></div>
+    <div id="res2"></div>
+    <select name = "sel" id="sel" onchange="moving()">
+        <option value="">선택안함</option>
+        <option value="http://www.naver.com">네이버</option>
+        <option value="http://www.daum.net">다음</option>
+        <option value="http://www.goole.com">구글</option>
+            </select>
+
+
+    <script>
+        var html = "";
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var btn3 = document.getElementById("btn3");
+        var btn4 = document.getElementById("btn4");
+        var btn5 = document.getElementById("btn5");
+        var btn6 = document.getElementById("btn6");
+        var btn7 = document.getElementById("btn7");
+        var btn8 = document.getElementById("btn8");
+        var res = document.getElementById("res");
+        var res2 = document.getElementById("res2");
+        btn1.addEventListener("click", function(){objectInfo()});
+        function objectInfo(){
+            for(var key in location){
+                html += "<p>"+key+":"+location[key]+"</p>";
+        }   res.innerHTML = html;   
+        }
+       
+        btn2.addEventListener("click", function(){
+        res2.innerText = location.href;     //속성은 () 없음
+        setTimeout(function(){
+            location.href = "http://www.naver.com"}, 2500);
+        });
+        
+        btn3.addEventListener("click", function(){
+            location.reload();
+        });
+        btn4.addEventListener("click", function(){  //뒤로가기 없음
+            location.replace("http://www.google.com");
+        });
+        btn5.addEventListener("click", function(){  //뒤로가기 있음
+            location.assign("http://www.daum.net");
+        });
+        btn6.addEventListener("click", function(){ //뒤로가기
+           history.back();
+        });
+        btn7.addEventListener("click", function(){  //앞으로가기
+            history.forward();
+        });
+        btn8.addEventListener("click", function(){ //원하는 곳으로 가기
+            history.go(1);  //한 단계 앞으로
+            history.go(-1);  //한 단계 뒤로
+            
+        });
+        
+    </script>
+        <button id="btn9" onclick="javascript:history.go(-1)">이동</button>
+        <button id="btn10" onclick="javascript:location.reload()">새로고침 버튼 10</button>
+
+
+    <script>
+
+        function moving(){
+            var loc = document.getElementById("sel");
+            if(loc.value!=""){
+            location.href = loc.value;  //폼 요소는 value
+            //location.replace = loc.value; 등등 가능
+            }}
+
+    </script>
+</body>
+</html>
